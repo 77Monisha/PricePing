@@ -1,3 +1,4 @@
+import EmptyState from "./component/empty-state";
 import Header from "./component/header";
 import HeroSection from "./component/hero-section";
 import ProductFeatures from "./component/product-feature";
@@ -10,7 +11,7 @@ export default function Home() {
       <HeroSection />
       <ProductForm />
       <ProductFeatures />
-      {/* <p>djnsvheorhni</p> */}
+      <EmptyState />
     </main>
   );
 }
