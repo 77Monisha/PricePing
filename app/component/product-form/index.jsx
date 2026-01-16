@@ -3,12 +3,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
+import { AuthModal } from "../auth-modal";
+import { addProduct } from "@/app/actions";
+import { toast } from "sonner";
 
-export default function ProductForm() {
+export default function ProductForm({ user }) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("url", url);
+
+    const result = await addProduct(formData);
+
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success(result.success || "Product tracked successfully!!");
+      setUrl("");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <>
@@ -40,6 +67,11 @@ export default function ProductForm() {
         </div>
       </form>
       {/* AUTH MODAL  */}
+
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </>
   );
 }

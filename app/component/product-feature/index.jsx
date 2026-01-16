@@ -1,7 +1,7 @@
 import { Bell, Feather, Rabbit, Shield } from "lucide-react";
 import React from "react";
 
-export default function ProductFeatures() {
+export default function ProductFeatures({ products }) {
   const FEATURES = [
     {
       icon: Rabbit,

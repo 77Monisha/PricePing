@@ -21,16 +21,16 @@ export async function addProduct(formData) {
 
   try {
     const supabase = await createClient();
-
     const {
       data: { user },
-    } = supabase.auth.getUser();
+    } = await supabase.auth.getUser();
 
     if (!user) {
-      return { error: "User not authenticated" };
+      return { error: "Not authenticated" };
     }
-
+    console.log("before scraping");
     const productData = await scrapeProduct(url);
+    console.log("after scraping", productData);
 
     if (!productData.productName || !productData.currentPrice) {
       console.log("productData", productData);
@@ -64,7 +64,7 @@ export async function addProduct(formData) {
           updated_at: new Date().toISOString(),
         },
         {
-          onConflict: "user_id,url", // Unique constraint on user_id + url
+          onConflict: "user_id, url", // Unique constraint on user_id + url
           ignoreDuplicates: false, // Always update if exists
         }
       )
@@ -117,7 +117,7 @@ export async function deleteProduct(productId) {
   }
 }
 
-export async function getProducts(productId) {
+export async function getProducts() {
   try {
     const supabase = await createClient();
 
@@ -130,6 +130,24 @@ export async function getProducts(productId) {
     return data || [];
   } catch (error) {
     console.error("Get products error:", error);
+    return [];
+  }
+}
+
+export async function getPriceHistory(productId) {
+  try {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("price_history")
+      .select("*")
+      .eq("product_id", productId)
+      .order("checked_at", { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+  } catch (error) {
+    console.error("price history error:", error);
     return [];
   }
 }

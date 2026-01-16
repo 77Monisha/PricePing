@@ -1,16 +1,26 @@
+import { getProducts } from "./actions";
 import EmptyState from "./component/empty-state";
 import Header from "./component/header";
 import HeroSection from "./component/hero-section";
 import ProductFeatures from "./component/product-feature";
 import ProductForm from "./component/product-form";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const products = user ? await getProducts() : [];
+  console.log("products", products);
+
   return (
     <main className="min-h-screen bg-linear-to-br from-lime-50 via-white to-lime-50">
       <Header />
       <HeroSection />
-      <ProductForm />
-      <ProductFeatures />
+      <ProductForm user={user} />
+      <ProductFeatures products={products} />
       <EmptyState />
     </main>
   );
