@@ -2,7 +2,7 @@ import React from "react";
 import { createClient } from "@/utils/supabase/server";
 import { TrendingDown } from "lucide-react";
 
-export default async function EmptyState() {
+export default async function EmptyState({ length }) {
   const supabase = await createClient();
 
   const {
@@ -11,7 +11,7 @@ export default async function EmptyState() {
 
   return (
     <>
-      {user && (
+      {!length && user && (
         <section className="max-w-2xl mx-auto px-4 pb-20 text-center mt-10">
           <div className="bg-white rounded-xl border-2 border-dashed border-gray-200 p-12">
             <TrendingDown className=" w-16 h-16 mx-auto b-4 text-gray-200" />

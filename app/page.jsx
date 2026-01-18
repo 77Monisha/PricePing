@@ -13,15 +13,14 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   const products = user ? await getProducts() : [];
-  console.log("products", products);
 
   return (
     <main className="min-h-screen bg-linear-to-br from-lime-50 via-white to-lime-50">
       <Header />
       <HeroSection />
       <ProductForm user={user} />
-      <ProductFeatures products={products} />
-      <EmptyState />
+      <ProductFeatures products={products} user={user} />
+      <EmptyState length={products.length} />
     </main>
   );
 }
