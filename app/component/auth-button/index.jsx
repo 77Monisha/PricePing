@@ -12,7 +12,12 @@ export default function AuthButton({ user }) {
   if (user) {
     return (
       <form action={signOut}>
-        <Button variant="ghost" size="sm" type="submit" className="gap-2">
+        <Button
+          // variant="ghost"
+          size="sm"
+          type="submit"
+          className="bg-lime-700 p-5 hover:bg-white hover:text-lime-700 border hover:border-2 hover:border-lime-700"
+        >
           <LogOut className="w-4 h-4" />
           Sign Out
         </Button>
