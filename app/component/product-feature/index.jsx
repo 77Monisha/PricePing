@@ -22,7 +22,6 @@ export default function ProductFeatures({ products, user }) {
       description: "Get notified instantly when prices drop below your target",
     },
   ];
-  console.log("products", products);
   return (
     <>
       {products.length === 0 && (

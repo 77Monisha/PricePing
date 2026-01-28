@@ -28,7 +28,6 @@ export async function addProduct(formData) {
     if (!user) {
       return { error: "Not authenticated" };
     }
-    console.log("before scraping");
     const productData = await scrapeProduct(url);
     console.log("after scraping", productData);
 
