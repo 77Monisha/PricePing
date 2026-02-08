@@ -43,7 +43,9 @@ export default function ProductFeatures({ products, user }) {
       {user && products.length > 0 && (
         <section className="max-w-7xl py-20 mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
-            <h3>Your Tracked Products</h3>
+            <h3 className="font-semibold text-2xl text-lime-900">
+              Live Price Drops
+            </h3>
             <span>
               {products.length} {products.length === 1 ? "product" : "products"}
             </span>
