@@ -1,4 +1,5 @@
 import { sendPriceDropAlert } from "@/lib/email";
+import { scrapeProduct } from "@/lib/firecrawl";
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
