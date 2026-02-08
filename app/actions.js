@@ -29,10 +29,8 @@ export async function addProduct(formData) {
       return { error: "Not authenticated" };
     }
     const productData = await scrapeProduct(url);
-    console.log("after scraping", productData);
 
     if (!productData.productName || !productData.currentPrice) {
-      console.log("productData", productData);
       return { error: "Could not extract product information from this url" };
     }
 
@@ -138,7 +136,7 @@ export async function getPriceHistory(productId) {
     const supabase = await createClient();
 
     const { data, error } = await supabase
-      .from("price_history")
+      .from("price_history") 
       .select("*")
       .eq("product_id", productId)
       .order("checked_at", { ascending: true });
